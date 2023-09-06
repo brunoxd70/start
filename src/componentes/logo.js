@@ -5,6 +5,7 @@ export const Logo = () => {
   const fillColor = theme.palette.primary.main;
 
   return (
+    
     <svg
       fill="none"
       height="100%"
