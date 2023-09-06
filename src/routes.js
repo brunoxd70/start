@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route,Routes} from "react-router-dom"; 
+import { BrowserRouter, Route,Routes} from "react-router-dom"; 
 import MenuPrincipal from "./pages/MenuPrincipal"
 import Cadastro from "./pages/Cadastro"
 import Chamada from "./pages/Chamada"
@@ -10,7 +10,7 @@ import CriarEscala from "./pages/CriarEscala"
 
 export default props => (
 
-    <Router >
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
         <Route path="/" element={<MenuPrincipal/>} />
         <Route path="/Cadastro" Component={Cadastro} />
@@ -18,6 +18,6 @@ export default props => (
         <Route path="/ConsultaVisitante" Component={ConsultaVisitante} />
         <Route path="/CriarEscala" Component={CriarEscala} />
         </Routes>
-    </Router>
+    </BrowserRouter>
 )
 
