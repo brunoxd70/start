@@ -7,101 +7,126 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableRow,TextField,
-  TableHead,Paper,
+  TableRow, TextField,
+  TableHead, Paper, IconButton
 } from '@mui/material';
-import ResponsiveTimePickers from "./Time"
+import DeleteIcon from '@mui/icons-material/Delete';
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 
 function SelectTableComponent() {
-  const [selectValues1, setSelectValues1] = useState([]);
-  const [selectValues2, setSelectValues2] = useState([]);
+  const [rows, setRows] = useState([{ id: 1, selectedOption1: '', selectedOption2: '' }]);
+  const [option2Data, setOption2Data] = useState({
+    'producao': ['PL', 'PO', 'PI'],
+    'louvor': ['Bateria', 'Baixo', 'Teclado'],
+    'crianca': ['Sala 1', 'Sala 2', 'Sala 3']
+  });
 
-  const handleAddSelect = () => {
-    setSelectValues1([...selectValues1, '']);
-    setSelectValues2([...selectValues2, '']);
+
+  const handleSelectChange1 = (event, id) => {
+    const selectedValue = event.target.value;
+    const updatedRows = rows.map((row) =>
+      row.id === id ? { ...row, selectedOption1: selectedValue, selectedOption2: '' } : row
+    );
+    setRows(updatedRows);
   };
 
+  const handleSelectChange2 = (event, id) => {
+    const selectedValue = event.target.value;
+    const updatedRows = rows.map((row) =>
+      row.id === id ? { ...row, selectedOption2: selectedValue } : row
+    );
 
-  const handleSelectChange1 = (index, value) => {
-    const updatedValues = [...selectValues1];
-    updatedValues[index] = value;
-    setSelectValues1(updatedValues);
-
-    console.log(`Item ${index} selecionado: Opção ${value}`);
+    setRows(updatedRows);
   };
 
-  const handleSelectChange2 = (index, value) => {
-    const updatedValues = [...selectValues2];
-    updatedValues[index] = value;
-    setSelectValues2(updatedValues);
+  const addRow = () => {
+    const newRow = { id: rows.length + 1, selectedOption1: '', selectedOption2: '' };
+    setRows([...rows, newRow]);
   };
 
-
+  const deleteRow = (id) => {
+    const updatedRows = rows.filter((row) => row.id !== id);
+    setRows(updatedRows);
+  };
   return (
-  <div>
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-    <TableContainer sx={{ maxHeight: 440, maxWidth: 1200}} >
-      <Table aria-label="caption table">
-        <caption>My Tasks</caption>
-        <TableHead>
-          <TableRow>
-            <TableCell>Cliente</TableCell>
-            <TableCell align="center">Projeto</TableCell>
-            <TableCell align="center">Tarefa</TableCell>
-            <TableCell align="center">Lançamento</TableCell>
-            <TableCell align="center">Inicio</TableCell>
-            <TableCell align="center">Fim</TableCell>
-            <TableCell align="center">Total</TableCell>
-            
-          </TableRow>
-        </TableHead>
-        <TableBody>
-            {selectValues1.map((value, index) => (
-              <TableRow key={index} >
-                <TableCell>
-                  <Select fullWidth
-                    value={value}
-                    onChange={(event) => handleSelectChange1(index, event.target.value)}
-                  >
-                    <MenuItem value="option1">Option 1</MenuItem>
-                    <MenuItem value="option2">Option 2</MenuItem>
-                    <MenuItem value="option3">Option 3</MenuItem>
-                  </Select>
-                </TableCell>
-                <TableCell>
-                  <Select fullWidth
-                    value={selectValues2[index]}
-                    onChange={(event) => handleSelectChange2(index, event.target.value)}
-                  >
-                    <MenuItem value="optionA">Option A</MenuItem>
-                    <MenuItem value="optionB">Option B</MenuItem>
-                    <MenuItem value="optionC">Option C</MenuItem>
-                  </Select>
-                </TableCell>
-                <TableCell>
-                <TextField id="projeto" fullWidth />
-                </TableCell>
-                <TableCell>
-                <TextField id="id" fullWidth />
-                </TableCell>
-                <TableCell>
-                <ResponsiveTimePickers/>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      </Paper>
-  
+    <div>
+      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <TableContainer sx={{ maxHeight: 600, maxWidth: 1200 }} >
+          <Table aria-label="caption table">
+            <caption>My Tasks</caption>
+            <TableHead>
+              <TableRow>
+                <TableCell >Deletar</TableCell>
+                <TableCell>Departamento</TableCell>
+                <TableCell align="center">Cargo</TableCell>
+                <TableCell align="center">Motivo</TableCell>
+                <TableCell >Dia Que Não Pode</TableCell>
 
-     <Button className="col-xl-2 col-md- mb-4 " variant="contained" color="warning">Criar Tarefa</Button>
-    <Button className="col-xl-2 col-md-6 mb-4 "variant="contained">Lançar</Button>
-    <Button className="col-xl-2 col-md-6 mb-4 "variant="contained" color="error" onClick={handleAddSelect}>Finalizar</Button>
-</div>
-  ); 
-    
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell sx={{ width: '5%' }}>
+                    <IconButton onClick={() => deleteRow(row.id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell>
+                    <Select fullWidth
+                      value={row.selectedOption1}
+                      onChange={(event) => handleSelectChange1(event, row.id)}
+                    >
+
+                      <MenuItem value="producao">Produção</MenuItem>
+                      <MenuItem value="louvor">Louvor</MenuItem>
+                      <MenuItem value="crianca">Criança</MenuItem>
+                    </Select>
+                  </TableCell>
+                  <TableCell>
+                    <Select fullWidth
+                      value={row.selectedOption2}
+                      onChange={(event) => handleSelectChange2(event, row.id)}
+                    >
+
+                      {option2Data[row.selectedOption1]?.map((option, index) => (
+                        <MenuItem key={index} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </TableCell>
+                  <TableCell>
+                    <TextField id="projeto" fullWidth />
+                  </TableCell>
+                  <TableCell>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+
+                      <DatePicker format="DD/MM/YYYY" />
+
+
+                    </LocalizationProvider>
+
+                  </TableCell>
+
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+      <Button className="col-xl-4 col-md-6 mb-4 " variant="contained" onClick={addRow} >Gravar Escala </Button>
+      <Button className="col-xl-4 col-md-6 mb-4 " variant="contained" color="warning" onClick={addRow} >Adicionar Escala </Button>
+
+    </div>
+  );
+
 }
 
 export default SelectTableComponent;
