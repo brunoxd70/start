@@ -12,7 +12,7 @@ export default props => (
 
   <Router>
     <Routes>
-      <Route path="/start" element={<MenuPrincipal />} />
+      <Route path="/" element={<MenuPrincipal />} />
       <Route path="/Cadastro" Component={Cadastro} />
       <Route path="/Chamada" Component={Chamada} />
       <Route path="/ConsultaVisitante" Component={ConsultaVisitante} />
