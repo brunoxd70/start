@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/brunoxd70/Start-build/static/css/main.7e784a03.css",
-    "main.js": "/brunoxd70/Start-build/static/js/main.555d1394.js",
+    "main.js": "/brunoxd70/Start-build/static/js/main.85488164.js",
     "static/media/fa-solid-900.svg": "/brunoxd70/Start-build/static/media/fa-solid-900.13de59f1a36b6cb4bca0.svg",
     "static/media/fa-brands-400.svg": "/brunoxd70/Start-build/static/media/fa-brands-400.216edb96b562c79adc09.svg",
     "static/media/fa-solid-900.eot": "/brunoxd70/Start-build/static/media/fa-solid-900.efbd5d20e407bbf85f2b.eot",
@@ -19,10 +19,10 @@
     "static/media/fa-regular-400.woff2": "/brunoxd70/Start-build/static/media/fa-regular-400.68c5af1f48e2bfca1e57.woff2",
     "index.html": "/brunoxd70/Start-build/index.html",
     "main.7e784a03.css.map": "/brunoxd70/Start-build/static/css/main.7e784a03.css.map",
-    "main.555d1394.js.map": "/brunoxd70/Start-build/static/js/main.555d1394.js.map"
+    "main.85488164.js.map": "/brunoxd70/Start-build/static/js/main.85488164.js.map"
   },
   "entrypoints": [
     "static/css/main.7e784a03.css",
-    "static/js/main.555d1394.js"
+    "static/js/main.85488164.js"
   ]
 }
